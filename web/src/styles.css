@@ -1,0 +1,262 @@
+:root {
+  font-family: Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+  color: #f5f5f5;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background: linear-gradient(180deg, #333 0%, #262626 100%);
+}
+
+.app-shell {
+  min-height: 100vh;
+}
+
+.top-bar {
+  background: #3a3a3a;
+  border-bottom: 1px solid #4a4a4a;
+  padding: 14px 18px;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+.top-bar h1 {
+  margin: 0;
+  font-size: 1.2rem;
+}
+
+.mobile-filter-toggle {
+  display: none;
+  padding: 10px 14px 0;
+}
+
+.layout {
+  display: grid;
+  grid-template-columns: 300px 1fr;
+  gap: 16px;
+  padding: 16px;
+}
+
+.sidebar {
+  background: #3f3f3f;
+  border: 1px solid #4b4b4b;
+  border-radius: 12px;
+  box-shadow: 0 8px 22px rgba(0, 0, 0, 0.28);
+  padding: 14px;
+  display: flex;
+  flex-direction: column;
+  min-height: calc(100vh - 112px);
+}
+
+.search-form {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.search-form input {
+  width: 100%;
+  border: 1px solid #5a5a5a;
+  background: #2f2f2f;
+  color: #fff;
+  border-radius: 8px;
+  padding: 10px;
+}
+
+.category-list {
+  margin-top: 14px;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 8px;
+}
+
+.category-item {
+  border: 1px solid #595959;
+  background: #2f2f2f;
+  color: #f1f1f1;
+  border-radius: 8px;
+  text-transform: capitalize;
+  padding: 10px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.category-item:hover,
+.btn:hover,
+.pager-btn:hover,
+.pager-dot:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 8px 14px rgba(0, 0, 0, 0.25);
+}
+
+.category-item.active {
+  border-color: #67a6ff;
+  background: #2b4673;
+}
+
+.sidebar-footer {
+  margin-top: auto;
+  padding-top: 12px;
+}
+
+.content-panel {
+  background: #3a3a3a;
+  border: 1px solid #4b4b4b;
+  border-radius: 12px;
+  box-shadow: 0 8px 22px rgba(0, 0, 0, 0.28);
+  min-height: calc(100vh - 112px);
+  display: flex;
+  flex-direction: column;
+  padding: 14px;
+}
+
+.featured-card {
+  position: relative;
+  border-radius: 12px;
+  overflow: hidden;
+  min-height: 480px;
+  height: calc(100vh - 220px);
+  max-height: 760px;
+  box-shadow: 0 12px 26px rgba(0, 0, 0, 0.35);
+}
+
+.featured-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.featured-overlay {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  padding: 18px;
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0.1) 0%, rgba(0, 0, 0, 0.86) 58%);
+}
+
+.featured-overlay h2 {
+  margin: 8px 0;
+  font-size: clamp(1.1rem, 2.2vw, 1.8rem);
+}
+
+.meta,
+.article-position {
+  color: #d6d6d6;
+  margin: 0;
+}
+
+.card-actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 12px;
+  flex-wrap: wrap;
+}
+
+.btn {
+  border: 0;
+  border-radius: 8px;
+  padding: 10px 14px;
+  color: #fff;
+  text-decoration: none;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btn.primary {
+  background: #2771d8;
+}
+
+.btn.secondary {
+  background: #5a5a5a;
+}
+
+.pager {
+  margin-top: 12px;
+  display: flex;
+  gap: 8px;
+  justify-content: center;
+}
+
+.pager-btn,
+.pager-dot {
+  min-width: 42px;
+  height: 42px;
+  border: 1px solid #5f5f5f;
+  background: #2d2d2d;
+  color: #fff;
+  border-radius: 999px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.pager-dot.active {
+  background: #2771d8;
+  border-color: #2771d8;
+}
+
+.loading-state,
+.status-card {
+  min-height: calc(100vh - 220px);
+  display: grid;
+  place-items: center;
+  border-radius: 12px;
+  border: 1px dashed #5f5f5f;
+  background: #2f2f2f;
+  text-align: center;
+}
+
+.spinner {
+  width: 38px;
+  height: 38px;
+  border: 4px solid #808080;
+  border-top-color: #2771d8;
+  border-radius: 999px;
+  animation: spin 0.9s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (max-width: 900px) {
+  .mobile-filter-toggle {
+    display: block;
+  }
+
+  .layout {
+    grid-template-columns: 1fr;
+  }
+
+  .sidebar {
+    min-height: auto;
+    display: none;
+  }
+
+  .sidebar.open {
+    display: flex;
+  }
+
+  .content-panel {
+    min-height: auto;
+  }
+
+  .featured-card {
+    min-height: 560px;
+    height: auto;
+  }
+
+  .loading-state,
+  .status-card {
+    min-height: 360px;
+  }
+}

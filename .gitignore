@@ -1,0 +1,9 @@
+node_modules
+dist
+.DS_Store
+*.log
+.env
+server/.env
+web/.env
+!.env.example
+!server/.env.example
