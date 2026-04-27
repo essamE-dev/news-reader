@@ -302,60 +302,63 @@ export default function App() {
         </aside>
 
         <main className="content-panel" role="main">
-          {loading && (
-            <section className="loading-state" aria-live="polite">
-              <div className="spinner" />
-              <p>Loading headlines...</p>
-            </section>
-          )}
+          <div className="article-slot">
+            {loading && (
+              <section className="loading-state" aria-live="polite">
+                <div className="spinner" />
+                <p>Loading headlines...</p>
+              </section>
+            )}
 
-          {!loading && error && (
-            <section className="status-card" role="alert">
-              <p>{error}</p>
-            </section>
-          )}
+            {!loading && error && (
+              <section className="status-card" role="alert">
+                <p>{error}</p>
+              </section>
+            )}
 
-          {noContent && (
-            <section className="status-card">
-              <p>{viewMode === "favorites" ? "No favorites yet." : "No articles found for this filter."}</p>
-            </section>
-          )}
+            {noContent && (
+              <section className="status-card">
+                <p>{viewMode === "favorites" ? "No favorites yet." : "No articles found for this filter."}</p>
+              </section>
+            )}
 
-          {!loading && !error && currentArticle && (
-            <>
+            {!loading && !error && currentArticle && (
               <HeadlinesList
                 article={currentArticle}
                 absoluteIndex={viewMode === "favorites" ? indexInPage + 1 : (page - 1) * 3 + indexInPage + 1}
                 isFavorite={Boolean(favorites[selectedArticleKey])}
                 onToggleFavorite={toggleFavorite}
               />
+            )}
+          </div>
 
-              <nav className="pager" aria-label="Article pagination">
-                <button className="pager-btn" onClick={goToFirstPage} disabled={viewMode === "favorites"}>
-                  «
-                </button>
-                <button className="pager-btn" onClick={goPrev}>
-                  ‹
-                </button>
+          {!loading && !error && currentArticle && (
+            <nav className="pager" aria-label="Article pagination">
+              <button className="pager-btn" onClick={goToFirstPage} disabled={viewMode === "favorites"}>
+                «
+              </button>
+              <button className="pager-btn" onClick={goPrev}>
+                ‹
+              </button>
 
-                {absoluteNumbers.map((dot) => (
-                  <button
-                    key={dot.label}
-                    className={`pager-dot ${dot.index === indexInPage ? "active" : ""}`}
-                    onClick={() => goToIndex(dot.index)}
-                  >
-                    {dot.label}
-                  </button>
-                ))}
-
-                <button className="pager-btn" onClick={goNext}>
-                  ›
+              {absoluteNumbers.map((dot) => (
+                <button
+                  key={dot.label}
+                  className={`pager-dot ${dot.index === indexInPage ? "active" : ""}`}
+                  onClick={() => goToIndex(dot.index)}
+                >
+                  {dot.label}
                 </button>
-              </nav>
-            </>
+              ))}
+
+              <button className="pager-btn" onClick={goNext}>
+                ›
+              </button>
+            </nav>
           )}
         </main>
       </div>
+      <footer className="app-footer">Built with NewsData.io</footer>
     </div>
   );
 }
