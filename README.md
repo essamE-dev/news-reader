@@ -1,139 +1,108 @@
 # News Reader
 
-A dynamic news application with a TypeScript-based full-stack architecture. This project features a backend server powered by Express.js and a modern frontend built with React and Vite.
+A responsive news reader app built with React + Vite that fetches data from TheNewsAPI through a backend proxy.
 
-## 📋 Project Overview
+## Overview
 
-The News Reader application allows users to stay updated with the latest news by fetching data from The News API. The application is designed with a client-server architecture, separating the frontend (web) and backend (server) components.
+- Browse news by category with one featured article view
+- Search articles with pagination
+- Save/remove favorites in local storage
+- Uses a proxy API route so the token is never exposed in the browser
 
-## 🏗️ Project Structure
+## Project Structure
 
-```
+```text
 news-reader/
-├── server/          # Express.js backend server
-├── web/             # React + Vite frontend application
-├── package.json     # Root package configuration
-├── .env.example     # Environment variables template
-└── .gitignore       # Git ignore rules
+├── api/                   # Vercel serverless API routes (production)
+│   ├── health.js
+│   └── news/all.js
+├── server/                # Express server (local development)
+│   ├── server.js
+│   └── .env.example
+├── web/                   # React + Vite frontend
+├── vercel.json            # Vercel build/output config
+└── .env.example           # Root env template
 ```
 
-## 🚀 Getting Started
+## Prerequisites
 
-### Prerequisites
+- Node.js 18+
+- npm
+- A TheNewsAPI token from [TheNewsAPI](https://www.thenewsapi.com/)
 
-- Node.js >= 16
-- npm or yarn
+## Local Development
 
-### Installation
+1) Install dependencies:
 
-1. Clone the repository:
-```bash
-git clone https://github.com/essamE-dev/news-reader.git
-cd news-reader
-```
-
-2. Install dependencies for both server and web:
 ```bash
 npm run server:install
 ```
 
-3. Set up environment variables:
+2) Create local server env file:
+
 ```bash
-# Copy the .env.example file and rename it to .env
-cp .env.example server/.env
+cp server/.env.example server/.env
 ```
 
-4. Add your API token from [The News API](https://www.thenewsapi.com/):
-```bash
-# Edit server/.env and add your THENEWSAPI_TOKEN
+3) Set your token in `server/.env`:
+
+```env
 THENEWSAPI_TOKEN=your_thenewsapi_token_here
 PORT=5177
 ```
 
-### Development
-
-Run both server and web development servers concurrently:
+4) Start app (server + web):
 
 ```bash
 npm run dev
 ```
 
-Or run them separately:
+5) Open:
 
-```bash
-# Terminal 1: Start the server
-npm run server:dev
+- Frontend: `http://localhost:5176`
+- API health: `http://localhost:5177/api/health`
 
-# Terminal 2: Start the web application
-npm run web:dev
-```
+## Scripts
 
-**Access the application:**
-- Frontend: http://localhost:5176
-- Backend API: http://localhost:5177
+### Root
 
-## 📦 Tech Stack
+- `npm run server:install` - install `server` and `web` dependencies
+- `npm run server:dev` - run Express API
+- `npm run web:dev` - run Vite frontend
+- `npm run dev` - run server and web together
 
-### Backend
-- **Express.js** - Web framework for Node.js
-- **CORS** - Cross-Origin Resource Sharing middleware
-- **dotenv** - Environment variable management
-- **node-fetch** - Fetch API for Node.js
+### Web (`web/`)
 
-### Frontend
-- **React** 18 - UI library
-- **Vite** - Next generation frontend tooling
-- **TypeScript** - Static type checking
-- **React DOM** - React package for working with the DOM
+- `npm run dev` - run Vite dev server on port `5176`
+- `npm run build` - type-check and build production bundle
+- `npm run preview` - preview production build
 
-### Development Tools
-- **concurrently** - Run multiple npm scripts simultaneously
-- **TypeScript** - Type safety and better development experience
+### Server (`server/`)
 
-## 📂 Available Scripts
+- `npm run dev` - run local Express proxy
 
-### Root Level
-- `npm run server:install` - Install dependencies for both server and web
-- `npm run server:dev` - Run server in development mode
-- `npm run web:dev` - Run web application in development mode
-- `npm run dev` - Run both server and web concurrently
+## Deploy to Vercel
 
-### Server (server/)
-- `npm run dev` - Start the Express server
+This repository is ready for Vercel:
 
-### Web (web/)
-- `npm run dev` - Start the Vite development server
-- `npm run build` - Build the TypeScript and Vite application
-- `npm run preview` - Preview the production build
+- Frontend build is configured via `vercel.json`
+- Production API is served by `api/news/all.js` and `api/health.js`
 
-## 🔐 Environment Variables
+### Steps
 
-Create a `.env` file in the `server/` directory:
+1) Import this repo into Vercel
+2) Set environment variable in Vercel project:
 
 ```env
-THENEWSAPI_TOKEN=your_api_token_here
-PORT=5177
+THENEWSAPI_TOKEN=your_thenewsapi_token_here
 ```
 
-- **THENEWSAPI_TOKEN** - Your API token from [The News API](https://www.thenewsapi.com/)
-- **PORT** - Port on which the server will run (default: 5177)
+3) Deploy
 
-## 📝 License
+After deploy, the frontend will call `/api/news/all` on the same domain.
 
-This project is currently unlicensed.
+## Security Notes
 
-## 👤 Author
-
-**essamE-dev** - [GitHub Profile](https://github.com/essamE-dev)
-
-## 🤝 Contributing
-
-Contributions are welcome! Feel free to open issues and pull requests.
-
-## 📚 Resources
-
-- [Express.js Documentation](https://expressjs.com/)
-- [React Documentation](https://react.dev/)
-- [Vite Documentation](https://vitejs.dev/)
-- [The News API Documentation](https://www.thenewsapi.com/)
-- [TypeScript Documentation](https://www.typescriptlang.org/)
+- Never commit real tokens to Git
+- Keep secrets only in `server/.env` (local) or Vercel env vars (production)
+- If a token is leaked, rotate it immediately in your TheNewsAPI dashboard
